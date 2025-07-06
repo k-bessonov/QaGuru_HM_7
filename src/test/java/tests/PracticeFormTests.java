@@ -3,7 +3,7 @@ package tests;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 
-import static tests.TestData.*;
+import static data.TestData.*;
 
 public class PracticeFormTests extends TestBase {
 
@@ -14,21 +14,19 @@ public class PracticeFormTests extends TestBase {
     void successfulRegistrationTest() {
 
         registrationPage.openPage()
+                .removeBanner()
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setEmail(userEmail)
                 .setGender(gender)
                 .setUserNumber(mobilePhone)
-                .setDateOfBirth("30", "March", "2000")
-
-
-                .setSubjects("Maths")
-                .setSubjects("Physics")
-                .setSubjects("Computer Science")
-                .setHobbies("Sports")
-                .setPicture("picture.png")
+                .setDateOfBirth(date, month, year)
+                .setSubjects(subjects)
+                .setHobbies(hobbies)
+                .setPicture(picture)
                 .setCurrentAddress(streetAddress)
-                .setStateAndCity("NCR", "Delhi")
+                .setState(state)
+                .setCity(city)
                 .submitPracticeForm();
 
         registrationPage.verifyResultsAppears()
@@ -36,12 +34,12 @@ public class PracticeFormTests extends TestBase {
                 .checkResult("Student Email", userEmail)
                 .checkResult("Gender", gender)
                 .checkResult("Mobile", mobilePhone)
-                .checkResult("Date of Birth", "30 March,2000")
-                .checkResult("Subjects", "Maths, Physics, Computer Science")
-                .checkResult("Hobbies", "Sports")
-                .checkResult("Picture", "picture.png")
+                .checkResult("Date of Birth", date + " " + month + "," + year)
+                .checkResult("Subjects", subjects)
+                .checkResult("Hobbies", hobbies)
+                .checkResult("Picture", picture)
                 .checkResult("Address", streetAddress)
-                .checkResult("State and City", "NCR Delhi");
+                .checkResult("State and City", state + " " + city);
 
     }
 

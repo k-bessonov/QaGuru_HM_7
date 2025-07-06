@@ -2,8 +2,8 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.ResultComponent;
 
-import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -22,16 +22,22 @@ public class RegistrationPage {
             currentAddressInput = $("#currentAddress"),
             stateInput = $("#state"),
             cityInput = $("#city"),
-            submitTab = $("#submit"),
-            verifyResultsWindow = $(".modal-dialog");
+            submitTab = $("#submit");
 
 
     CalendarComponent calendarComponent = new CalendarComponent();
+    ResultComponent resultComponent = new ResultComponent();
 
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+
+
+        return this;
+    }
+
+    public RegistrationPage removeBanner() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
 
@@ -100,14 +106,21 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setStateAndCity(String state, String city) {
+    public RegistrationPage setState(String state) {
         stateInput.click();
         $(byText(state)).click();
+
+        return this;
+    }
+
+
+    public RegistrationPage setCity( String city) {
         cityInput.click();
         $(byText(city)).click();
 
         return this;
     }
+
 
     public void submitPracticeForm() {
         submitTab.click();
@@ -115,20 +128,19 @@ public class RegistrationPage {
     }
 
     public RegistrationPage verifyResultsAppears() {
-        verifyResultsWindow.should(appear);
+        resultComponent.verifyResultsAppears();
 
         return this;
     }
 
-    public RegistrationPage checkResult(String key, String city) {
-        $(".table-responsive").$(byText(key)).parent()
-                .shouldHave(text(city));
+    public RegistrationPage checkResult(String key, String value) {
+        resultComponent.checkResult(key, value);
 
         return this;
     }
 
     public void verifyNegativeResultsAppears() {
-        verifyResultsWindow.shouldNot(appear);
+        resultComponent.verifyNegativeResultsAppears();
 
     }
 }
