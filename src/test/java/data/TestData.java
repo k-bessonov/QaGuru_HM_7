@@ -15,7 +15,7 @@ public class TestData {
             userEmail = faker.internet().emailAddress(),
             gender = faker.options().option(genders),
             streetAddress = faker.address().streetAddress(),
-            mobilePhone = faker.numerify("##########"),
+            mobilePhone = faker.phoneNumber().subscriberNumber(10),
             date = String.format("%02d", faker.number().numberBetween(1, 28)),
             month = faker.options().option("January", "February", "March", "April",
                     "May", "June", "July", "August", "September", "October", "November", "December"),
