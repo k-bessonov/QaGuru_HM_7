@@ -63,9 +63,9 @@ public class PracticeFormTests extends TestBase {
     void negativeMinFormTest() {
 
         registrationPage.openPage()
-                .setFirstName("Имя")
-                .setLastName("Фамилия")
-                .setGender("Male")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setGender(gender)
                 .setUserNumber("")
                 .submitPracticeForm();
 
